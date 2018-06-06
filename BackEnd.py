@@ -35,7 +35,7 @@ def createPlayerDict(numPlayers):
     return str(playerDict)
 
 # setup game and instantiate player dictionary
-createPlayerDict(setupPlayers())
+#createPlayerDict(setupPlayers())
 
 # play the game function
 def playGame() :
@@ -78,5 +78,5 @@ def playGame() :
     print("Player ", [k], "wins the game")
 
 # start game
-playGame()
+#playGame()
 
