@@ -24,14 +24,6 @@ def setupPlayers():
 # create player dictionary, setup number of players and initial 0 value
 def createPlayerDict(numPlayers):
     global playerDict
-<<<<<<< HEAD
-    playerDict = {}
-    i = 0
-    for i in range(1,numPlayers+1) :
-        playerKey = str(i)
-        playerDict[playerKey] = 0
-    return str(playerDict)
-=======
     if numPlayers > 4 or numPlayers < 2:
             return "Must be a number greater than 1 and less than 5"
     else:
@@ -42,7 +34,6 @@ def createPlayerDict(numPlayers):
                 playerDict[playerKey] = 0
     return str(playerDict)
 
->>>>>>> 6ce572f09605d351055320edcc6ae054ea3da499
 # setup game and instantiate player dictionary
 #createPlayerDict(setupPlayers())
 
