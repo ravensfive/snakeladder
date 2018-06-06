@@ -8,29 +8,43 @@ def rollDice() :
 
 # how many players are player, user input, must be a number between 2 and 5
 def setupPlayers():
-    players=0
+    global numPlayers
+    numPlayers=0
     while True:
         try:
             print("How many players are in the game?")
-            players = int(input())
-            if players > 4 or players < 2:
+            numPlayers = int(input())
+            if numPlayers > 4 or numPlayers < 2:
                 print("Must be a number greater than 1 and less than 5")
             else:
-                return players
+                return numPlayers
         except:
             print("Must be a number")
 
 # create player dictionary, setup number of players and initial 0 value
 def createPlayerDict(numPlayers):
     global playerDict
+<<<<<<< HEAD
     playerDict = {}
     i = 0
     for i in range(1,numPlayers+1) :
         playerKey = str(i)
         playerDict[playerKey] = 0
     return str(playerDict)
+=======
+    if numPlayers > 4 or numPlayers < 2:
+            return "Must be a number greater than 1 and less than 5"
+    else:
+            playerDict = {}
+            i = 0
+            for i in range(1,numPlayers+1) :
+                playerKey = str(i)
+                playerDict[playerKey] = 0
+            return playerDict
+
+>>>>>>> 6ce572f09605d351055320edcc6ae054ea3da499
 # setup game and instantiate player dictionary
-#createPlayerDict(setupPlayers())
+createPlayerDict(setupPlayers())
 
 # play the game function
 def playGame() :
@@ -73,5 +87,5 @@ def playGame() :
     print("Player ", [k], "wins the game")
 
 # start game
-#playGame()
+playGame()
 
