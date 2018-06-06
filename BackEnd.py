@@ -30,8 +30,7 @@ def createPlayerDict(numPlayers):
         playerDict[playerKey] = 0
 
 # setup game and instantiate player dictionary
-createPlayerDict(setupPlayers())
-
+#createPlayerDict(setupPlayers())
 
 # play the game function
 def playGame() :
@@ -59,13 +58,13 @@ def playGame() :
         for a in ladders :
             if a == playerDict[k] : 
                 playerDict[k] = playerDict[k] + 3
-                print("Well done Cock, you landed on a ladder moving forward to ", playerDict[k] )
+                print("Congratulations, you landed on a ladder moving forward to ", playerDict[k] )
 
         # test if the position landed on is a snake
         for b in snakes :
             if b == playerDict[k] : 
                 playerDict[k] = playerDict[k] - 3
-                print("How unfortunate you cunt, you landed on a snake moving back to ", playerDict[k] )
+                print("How unfortunate, you landed on a snake moving back to ", playerDict[k] )
 
         # test if the current players score is over 100
         if  playerDict[k] >= 100 :
@@ -74,5 +73,5 @@ def playGame() :
     print("Player ", [k], "wins the game")
 
 # start game
-playGame()
+#playGame()
 
