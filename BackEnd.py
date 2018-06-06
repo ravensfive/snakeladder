@@ -46,7 +46,8 @@ def playGame() :
     
     # loop through player dictionary
     for k in playerDict :
-        input("Player ", k,"'s turn, your current score is", playerDict[k], ", press enter to roll the dice")
+        print("Player ", k,"'s turn, your current score is", playerDict[k])
+        input("Press enter to roll the dice")
         # roll the dice
         rollDice()
         # update player score
