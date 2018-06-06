@@ -3,6 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, session, abo
 import os
 import random
 from rollDice import funcRollDice
+from BackEnd import createPlayerDict
  
 app = Flask(__name__)
  
@@ -11,7 +12,7 @@ def home():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        return funcRollDice()
+        return createPlayerDict(2)
         
  
 @app.route('/login', methods=['POST'])
