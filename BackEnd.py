@@ -28,7 +28,7 @@ def createPlayerDict(numPlayers):
     for i in range(1,numPlayers+1) :
         playerKey = str(i)
         playerDict[playerKey] = 0
-
+    return str(playerDict)
 # setup game and instantiate player dictionary
 #createPlayerDict(setupPlayers())
 
