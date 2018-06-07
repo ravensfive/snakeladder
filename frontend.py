@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def login():
-    return render_template('login.html', variable='Wank')
+    return render_template('GameStartArea.html', variable='Wank')
 
 @app.route('/PlayGame', methods=['POST'])
 def do_admin_login():
