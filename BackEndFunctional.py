@@ -52,7 +52,6 @@ def createPlayerDict(numPlayers):
                     print("No player entered, entry recorded as Player", i)
     return str(playerDict)
 
-
 # setup game and instantiate player dictionary
 createPlayerDict(setupPlayers())
 
