@@ -1,6 +1,19 @@
 #import random package
 import random
 
+gameReady = False
+
+#while gameReady == False :
+gameSize = input("What is the maximum score, must be a multiple of 10!")
+gameSize = int(gameSize)
+    #if gameSize / 10 == int(gameSize/10) :
+ladderFactor = 10
+snakeFactor =  10
+gameReady = True
+       # print("Game initiated, at size", gameSize)
+    #else :
+     #   gameSize = input("What is the maximum score, must be a multiple of 10!")
+
 # dice roll, returns a value between 1 and 6
 def rollDice() :
     global DiceValue
@@ -30,8 +43,13 @@ def createPlayerDict(numPlayers):
             playerDict = {}
             i = 0
             for i in range(1,numPlayers+1) :
-                playerKey = "Player" + str(i)
-                playerDict[playerKey] = 0
+                playerKey = input("Input the players name?",)
+                if playerKey != "" :
+                    playerDict[playerKey] = 0
+                else :
+                    playerKey = "Player" + str(i)
+                    playerDict[playerKey] = 0
+                    print("No player entered, entry recorded as Player", i)
     return str(playerDict)
 
 
@@ -41,8 +59,21 @@ createPlayerDict(setupPlayers())
 # play the game function
 def playGame() :
     global winner
-    ladders = {5,15,25,35,45,55,65,75,85,95}
-    snakes = {10,20,30,40,50,60,70,80,90}
+    ladders = []
+    snakes = []
+    l = 0
+    s = 0
+
+    for l in range(1,random.randint(5,10)+1) :
+        ladders.append(random.randint(1,90))
+    #ladders = {5,15,25,35,45,55,65,75,85,95}
+    for s in range(1,random.randint(5,10)+1) :
+        snakes.append(random.randint(10,99))
+       
+    #snakes = {10,20,30,40,50,60,70,80,90}
+
+    print("Ladders are at postions ", ladders)
+    print("Snakes are at positions ", snakes)
 
 # set winner default
     winner = 0
@@ -52,29 +83,31 @@ def playGame() :
         
         # loop through player dictionary
         for k in playerDict :
-            print( k, "'s turn, your current score is", playerDict[k])
-            input("Press enter to roll the dice")
+            #InputString = k + "'s turn, your current score is " + str(playerDict[k]) + ". Press enter to roll the dice!"
+            #input(InputString)
             # roll the dice
             rollDice()
             # update player score
             playerDict[k] = playerDict[k] + DiceValue
             # feedback score to player
-            print("You rolled a ", str(DiceValue), " and your new score is ", playerDict[k])
+            print(k, ", you rolled a ", str(DiceValue), " and your new score is ", playerDict[k])
 
             # test if the position landed is a ladder
             for a in ladders :
                 if a == playerDict[k] : 
-                    playerDict[k] = playerDict[k] + 3
-                    print("Congratulations, you landed on a ladder moving forward to ", playerDict[k] )
+                    playerDict[k] = playerDict[k] + random.randint(10,20)
+                    print(k, ", congratulations, you landed on a ladder moving forward to ", playerDict[k] )
 
             # test if the position landed on is a snake
             for b in snakes :
                 if b == playerDict[k] : 
-                    playerDict[k] = playerDict[k] - 3
-                    print("How unfortunate, you landed on a snake moving back to ", playerDict[k] )
+                    playerDict[k] = playerDict[k] - random.randint(10,20)
+                    print(k, "how unfortunate, you landed on a snake moving back to ", playerDict[k] )
+
+            print(playerDict)
 
             # test if the current players score is over 100
-            if  playerDict[k] >= 100 :
+            if  playerDict[k] >= gameSize :
                 winner = [k]
 
     print(winner, "wins the game")
