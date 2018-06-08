@@ -8,13 +8,14 @@ def setupJson() :
     playerdata['players'] = []
 
 # add player to the json, called with parameters
-def addplayertoJson(ID,Name,nextPlay,didPlay) :
+def addplayertoJson(ID,Name,nextPlay,didPlay,hasWon) :
     playerdata['players'].append({    
     'ID': ID ,
     'Name': Name,
     'Score': "0",
     'nextPlay': nextPlay,
-    'didPlay': didPlay
+    'didPlay': didPlay,
+    'hasWon': hasWon
     })
 
 # setup game
@@ -35,7 +36,7 @@ def setupGame() :
         print("Game initiated, at size", gameSize)
         #else :
         #   gameSize = input("What is the maximum score, must be a multiple of 10!")
-        print("Randomising ladders and snakes")
+        #print("Randomising ladders and snakes")
         ladders = []
         snakes = []
         l=0
@@ -47,8 +48,8 @@ def setupGame() :
         for s in range(1,factor) :
             snakes.append(random.randint(10,99))
 
-        print("Ladders are at postions ", ladders)
-        print("Snakes are at positions ", snakes)
+        #print("Ladders are at postions ", ladders)
+        #print("Snakes are at positions ", snakes)
 
         # call to setup json
         setupJson()
@@ -75,14 +76,14 @@ def createPlayerDict(numPlayers):
                     nextPlay = False
                 playerKey = input("Input the players name?",)
                 if playerKey != "" :
-                    addplayertoJson(i,playerKey,nextPlay,False)
+                    addplayertoJson(i,playerKey,nextPlay,False,False)
                 else :
                     playerKey = "Player" + str(i)
-                    addplayertoJson(i,playerKey,nextPlay,False)
+                    addplayertoJson(i,playerKey,nextPlay,False,False)
                     print("No player entered, entry recorded as Player", i)
                 # write out data to json file
-            with open('player.json', 'w') as outfile:  
-                   json.dump(playerdata, outfile) 
+            #with open('player.json', 'w') as outfile:  
+            #       json.dump(playerdata, outfile) 
 
 # setup the game
 setupGame()
@@ -90,87 +91,65 @@ setupGame()
 # setup the players
 createPlayerDict(setupPlayers())
 
-
 def playTurn() :
 
+    playingPlayerID = 0
+
     # load json
-    with open('player.json') as json_file :  
-        playerdata = json.load(json_file)
+    #with open('player.json') as json_file :  
+    #    playerdata = json.load(json_file)
         
-    for p in playerdata['players']:
-        
-        print(p['ID'],p['Name'],p['Score'], p['nextPlay'])
+    for p in playerdata['players']:    
 
         if p['nextPlay'] == True :
+  
             diceRoll = random.randint(1,6)
-            print(str(diceRoll))
             p['Score'] = str(int(p['Score']) + diceRoll)
             p['nextPlay'] = False
             p['didPlay'] = True
-         
-            print(p['ID'],p['Name'],p['Score'], p['nextPlay'])    
+
+            # set next player
+            playingPlayerID = int(p['ID'])
+
+            if int(p['Score']) >= gameSize :
+                p['hasWon'] = True
+
+    # set next player
+    if playingPlayerID == len(playerdata['players']) :
+        playerdata['players'][0]['nextPlay'] = True        
+    else :
+        playerdata['players'][playingPlayerID]['nextPlay'] = True
 
     print(playerdata)
     
-    with open('player.json', 'w') as outfile:  
-        json.dump(playerdata, outfile) 
-
     # did they land on a snake or a ladder
     # did they win
-    # return json
 
-playTurn()
-
-# play the game function
 def playGame() :
-    global winner
+    
+    # ***** Si, you need to replicate something like this for the front end
+    winner = ""
 
-# set winner default
-    winner = 0
-
-    # open json file
-    with open('player.json') as json_file:  
-        playerdata = json.load(json_file)
-
-    # loop through to player json file until you hit winner
-    while winner == 0 :
-        
-        # loop through player json file
-        for p in playerdata['players']:
-            #InputString = k + "'s turn, your current score is " + str(playerDict[k]) + ". Press enter to roll the dice!"
-            #input(InputString)
-            # roll the dice
-            #rollDice()
-            # update player score
-            #p['Score'] = int(p['Score']) + DiceValue
-            # feedback score to player
-            #print(p['Name'], ", you rolled a ", str(DiceValue), " and your new score is ", int(p['Score']))
-
-            # test if the position landed is a ladder
-            for a in ladders :
-                if a == int(p['Score']) : 
-                    p['Score'] = int(p['Score']) + random.randint(10,20)
-                    print(p['Name'], ", congratulations, you landed on a ladder moving forward to ", int(p['Score']) )
-
-            # test if the position landed on is a snake
-            for b in snakes :
-                if b == int(p['Score']) : 
-                    p['Score'] = int(p['Score']) - random.randint(10,20)
-                    print(p['Name'], "how unfortunate, you landed on a snake moving back to ", int(p['Score']) )
-
-            print(playerdata)
-
-            # test if the current players score is over 100
-            if  int(p['Score']) >= gameSize :
+    while winner == "" :
+        # this simulates your button press
+        input('Press enter to roll the dice')
+        # this calls the generic play turn function
+        playTurn()
+        # this loops through the player json and tests if there has been a winner, I think you will
+        # need to expand this to also extract the following information :
+        # all player current scores, who's turn is it next, who just played, has anyone won and who
+        # also typing this up, we will also need to add a last score to the json, so you can provide the result back 
+        for p in playerdata['players'] :   
+            if p['hasWon'] == True :
                 winner = p['Name']
 
-    print(winner, "wins the game")
+    print("The winner is", winner)
 
     with open('player.json', 'w') as outfile:  
         json.dump(playerdata, outfile) 
 
+playGame()
 
-
-# start game
-#playGame()
-
+    # open json file
+    #with open('player.json') as json_file:  
+     #   playerdata = json.load(json_file)

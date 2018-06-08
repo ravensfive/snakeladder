@@ -1,1 +1,1 @@
-{"players": [{"ID": 1, "Name": "Player1", "Score": "1", "nextPlay": false, "didPlay": true}, {"ID": 2, "Name": "Player2", "Score": "0", "nextPlay": false, "didPlay": false}]}
+{"players": [{"ID": 1, "Name": "Player1", "Score": "101", "nextPlay": false, "didPlay": true, "hasWon": true}, {"ID": 2, "Name": "Player2", "Score": "77", "nextPlay": true, "didPlay": true, "hasWon": false}]}
