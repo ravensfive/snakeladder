@@ -1,0 +1,40 @@
+<!-- This is the page that loads first
+  It will have a Title and a button called Start Game
+  When the button is clicked it will then load the second page which will gather the 
+  player requirements What is Block Body
+
+-->
+
+{% extends "mainTemplate.HTML" %}
+
+{% block content %}
+  <p> Please select Start Game below to begin </p>
+  <button type="button" onclick="alert('Lets Go')">Click to start</button>
+{% endblock %}
+
+
+
+<!--
+{% block body %}
+{% if session['logged_in'] %}
+    <p>You're logged in already!</p>
+    {% else %}
+    <form action="/PlayGame" method="POST">
+      <input name="numPlayers" placeholder="No Players">
+      <input type="submit" value="Submit">
+      <button>Hello</button>
+    </form>
+    <p>Here is my variable: {{ variable }}</p>
+  {% endif %}
+{% endblock %}
+
+-->
+
+
+
+
+
+
+
+
+
