@@ -8,14 +8,18 @@ def setupJson() :
     playerdata['players'] = []
 
 # add player to the json, called with parameters
-def addplayertoJson(ID,Name,nextPlay,didPlay,hasWon) :
+def addplayertoJson(ID,Name,lastScore,lastRoll,nextPlay,didPlay,hasWon,numGoes) :
     playerdata['players'].append({    
     'ID': ID ,
     'Name': Name,
+    'lastScore': lastScore,
+    'lastRoll': lastRoll,
     'Score': "0",
     'nextPlay': nextPlay,
     'didPlay': didPlay,
-    'hasWon': hasWon
+    'hasWon': hasWon,
+    'numGoes': numGoes
+
     })
 
 # setup game
@@ -76,10 +80,10 @@ def createPlayerDict(numPlayers):
                     nextPlay = False
                 playerKey = input("Input the players name?",)
                 if playerKey != "" :
-                    addplayertoJson(i,playerKey,nextPlay,False,False)
+                    addplayertoJson(i,playerKey,0,0,nextPlay,False,False,0)
                 else :
                     playerKey = "Player" + str(i)
-                    addplayertoJson(i,playerKey,nextPlay,False,False)
+                    addplayertoJson(i,playerKey,0,0,nextPlay,False,False,0)
                     print("No player entered, entry recorded as Player", i)
                 # write out data to json file
             #with open('player.json', 'w') as outfile:  
@@ -104,7 +108,10 @@ def playTurn() :
         if p['nextPlay'] == True :
   
             diceRoll = random.randint(1,6)
+            p['lastRoll'] = diceRoll
+            p['lastScore'] = p['Score']
             p['Score'] = str(int(p['Score']) + diceRoll)
+            p['numGoes'] = p['numGoes'] + 1
             p['nextPlay'] = False
             p['didPlay'] = True
 
@@ -138,7 +145,8 @@ def playGame() :
         # this loops through the player json and tests if there has been a winner, I think you will
         # need to expand this to also extract the following information :
         # all player current scores, who's turn is it next, who just played, has anyone won and who
-        # also typing this up, we will also need to add a last score to the json, so you can provide the result back 
+        # also typing this up, we will also need to add a last score to the json, so you can provide the result back
+        # ****done this 18/06/2018 - added last score, last roll and num of goes**** 
         for p in playerdata['players'] :   
             if p['hasWon'] == True :
                 winner = p['Name']
