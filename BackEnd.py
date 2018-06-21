@@ -78,7 +78,9 @@ def createPlayerDict(numPlayers):
                     nextPlay = True
                 else :
                     nextPlay = False
-                playerKey = input("Input the players name?",)
+                    
+                playerKey = input("Input the players name?")
+
                 if playerKey != "" :
                     addplayertoJson(i,playerKey,0,0,nextPlay,False,False,0)
                 else :
@@ -127,7 +129,7 @@ def playTurn() :
     else :
         playerdata['players'][playingPlayerID]['nextPlay'] = True
 
-    print(playerdata)
+    #print(playerdata)
     
     # did they land on a snake or a ladder
     # did they win
@@ -139,7 +141,7 @@ def playGame() :
 
     while winner == "" :
         # this simulates your button press
-        input('Press enter to roll the dice')
+        #input('Press enter to roll the dice')
         # this calls the generic play turn function
         playTurn()
         # this loops through the player json and tests if there has been a winner, I think you will
