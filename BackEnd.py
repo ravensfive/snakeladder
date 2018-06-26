@@ -129,7 +129,7 @@ def playTurn() :
     else :
         playerdata['players'][playingPlayerID]['nextPlay'] = True
 
-    #print(playerdata)
+    print(playerdata)
     
     # did they land on a snake or a ladder
     # did they win
