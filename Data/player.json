@@ -1,0 +1,1 @@
+{"players": [{"ID": 1, "Name": "Player1", "lastScore": "998875", "lastRoll": 4, "Score": "998879", "nextPlay": true, "didPlay": true, "hasWon": false, "numGoes": 285682}, {"ID": 2, "Name": "Player2", "lastScore": "999998", "lastRoll": 2, "Score": "1000000", "nextPlay": false, "didPlay": true, "hasWon": true, "numGoes": 285682}]}
