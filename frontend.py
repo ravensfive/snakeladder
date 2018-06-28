@@ -10,11 +10,29 @@ app = Flask(__name__)
 def GameStart():
     return render_template('Page1GameStart.html')
 
+@app.route('/GameSetUp',methods = ['POST', 'GET'])
+def result():
+   if request.method == 'POST':
+      result = request.form
+      return render_template("Page2GameSetUp.html")
+
+
 #Post Method selected which creates PlayGame area
-#@app.route('/PlayGame', methods=['POST'])
-#def do_admin_login():
+#@app.route('/GameSetUp')
+#def GameSetUp():
+
+
+    #return render_template('Page2GameSetUp.html')
     #return render_template('Game.html', variable=createPlayerDict(int(request.form['numPlayers'])) )
     #return render_template('Game.html', variable='Cock')
+    
+@app.route('/GameProgress')
+def gameProgress():
+    return render_template('Page3GameProgress.html')
+
+@app.route('/GameOver')
+def gameOver():
+    return render_template('Page4GameOver.html')
     
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
