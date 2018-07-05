@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session, abort
+from flask import Flask, flash, redirect, render_template, request, session, abort, url_for, make_response
 import os
 import random
 #from BackEnd import createPlayerDict
@@ -6,15 +6,38 @@ import random
 app = Flask(__name__)
 
 #App.Route takes you to a specific area.  For example ('/') is the initial page
-@app.route('/')
+@app.route('/', methods = ['POST', 'GET'])
 def GameStart():
-    return render_template('Page1GameStart.html')
+    print(request.method)
+    if request.method == 'GET':
+        return render_template('Page1GameStart.html')
+    #return "Hello Bert"
+    elif request.method == 'POST':
+        if request.form.get('Start Game') == 'Start Game':
+            print('Game Started')
+            return redirect(url_for('GameSetUp'))
+        else:
+            return 'Fuck Off then'
+        #return render_template('Page2GameSetUp.html')
+        
+        #return str(random.randint(1,10))
 
-@app.route('/GameSetUp',methods = ['POST', 'GET'])
-def result():
-   if request.method == 'POST':
-      result = request.form
-      return render_template("Page2GameSetUp.html")
+@app.route('/GameSetUp', methods = ['POST', 'GET'])
+def GameSetUp():
+    return render_template('Page2GameSetUp.html')
+    #str(random.randint(1,10))
+    #if request.method == 'GET':   
+        #return "John" 
+     #   return render_template('Page2GameSetUp.html')
+    #else:
+     #   return str(random.randint(1,10))
+
+    #return str(random.randint(1,10))
+
+
+   #if request.method == 'POST':
+      #result = request.form
+      #return render_template("Page2GameSetUp.html")
 
 
 #Post Method selected which creates PlayGame area
