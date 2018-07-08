@@ -17,7 +17,8 @@ def GameStart():
             print('Game Started')
             return redirect(url_for('GameSetUp'))
         else:
-            return 'Fuck Off then'
+            return 'That is a shame are you sure?
+            # Set up a End Game Template with Options to start again
         #return render_template('Page2GameSetUp.html')
         
         #return str(random.randint(1,10))
