@@ -1,23 +1,29 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for, make_response
 import os
 import random
-#from BackEnd import createPlayerDict
+import BackEnd
  
 app = Flask(__name__)
 
 #App.Route takes you to a specific area.  For example ('/') is the initial page
+#GameStart page 
 @app.route('/', methods = ['POST', 'GET'])
 def GameStart():
     print(request.method)
     if request.method == 'GET':
         return render_template('Page1GameStart.html')
     #return "Hello Bert"
-    elif request.method == 'POST':
+    elif request.method == 'POST':#
         if request.form.get('Start Game') == 'Start Game':
             print('Game Started')
             return redirect(url_for('GameSetUp'))
         else:
-            return 'That is a shame are you sure?
+            BackEnd.setupGame()
+            BackEnd.createPlayerDict(2)
+            BackEnd.playTurn()
+            return BackEnd.playGame()
+            #return 'Complete'
+            
             # Set up a End Game Template with Options to start again
         #return render_template('Page2GameSetUp.html')
         
@@ -27,7 +33,7 @@ def GameStart():
 def GameSetUp():
     return render_template('Page2GameSetUp.html')
     #str(random.randint(1,10))
-    #if request.method == 'GET':   
+    #if requeest.method == 'GET':   
         #return "John" 
      #   return render_template('Page2GameSetUp.html')
     #else:

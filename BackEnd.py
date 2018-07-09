@@ -6,6 +6,7 @@ def setupJson() :
     global playerdata
     playerdata = {}
     playerdata['players'] = []
+    print ("JSON Setup")
 
 # add player to the json, called with parameters
 def addplayertoJson(ID,Name,lastScore,lastRoll,nextPlay,didPlay,hasWon,numGoes) :
@@ -29,18 +30,20 @@ def setupGame() :
 
     # store variable to control setup
     gameReady = False
+    print (gameReady)
 
     # loop through until ready
     while gameReady == False :
-        gameSize = input("What is the maximum score, must be a multiple of 10!")
-        gameSize = int(gameSize)
+        #gameSize = input("What is the maximum score, must be a multiple of 10!")
+        #gameSize = int(gameSize)
+        gameSize = 100
         #if gameSize / 10 == int(gameSize/10) :
         factor = int(gameSize / 10)
         gameReady = True
         print("Game initiated, at size", gameSize)
         #else :
         #   gameSize = input("What is the maximum score, must be a multiple of 10!")
-        #print("Randomising ladders and snakes")
+        print("Randomising ladders and snakes")
         ladders = []
         snakes = []
         l=0
@@ -52,11 +55,14 @@ def setupGame() :
         for s in range(1,factor) :
             snakes.append(random.randint(10,99))
 
-        #print("Ladders are at postions ", ladders)
-        #print("Snakes are at positions ", snakes)
+        print("Ladders are at postions ", ladders)
+        print("Snakes are at positions ", snakes)
 
         # call to setup json
         setupJson()
+        print("JSON Setup")
+
+        return None
 
 # how many players are player, user input, must be a number between 2 and 5
 def setupPlayers():
@@ -92,10 +98,10 @@ def createPlayerDict(numPlayers):
             #       json.dump(playerdata, outfile) 
 
 # setup the game
-setupGame()
+#setupGame()
 
 # setup the players
-createPlayerDict(setupPlayers())
+#createPlayerDict(setupPlayers())
 
 def playTurn() :
 
@@ -141,7 +147,7 @@ def playGame() :
 
     while winner == "" :
         # this simulates your button press
-        #input('Press enter to roll the dice')
+        input('Press enter to roll the dice')
         # this calls the generic play turn function
         playTurn()
         # this loops through the player json and tests if there has been a winner, I think you will
@@ -152,14 +158,26 @@ def playGame() :
         for p in playerdata['players'] :   
             if p['hasWon'] == True :
                 winner = p['Name']
-
-    print("The winner is", winner)
+                print(winner)
+    return("The winner is " + winner)    
+    #return winner       
+                
 
     with open('player.json', 'w') as outfile:  
         json.dump(playerdata, outfile) 
 
-playGame()
+
+
+#playGame()
 
     # open json file
     #with open('player.json') as json_file:  
      #   playerdata = json.load(json_file)
+if __name__ == '__main__':
+
+    playGame()
+    playTurn()
+    setupGame()   
+    setupPlayers()
+    createPlayerDict(setupPlayers)
+
