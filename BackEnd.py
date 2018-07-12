@@ -97,6 +97,17 @@ def createPlayerDict(numPlayers):
             #with open('player.json', 'w') as outfile:  
             #       json.dump(playerdata, outfile) 
 
+# Create a seperate function to capture the player names
+def createPlayers(playerKey, playerNumber, nextPlay):
+
+                if playerKey != "" :
+                    addplayertoJson(playerNumber,playerKey,0,0,nextPlay,False,False,0)
+                else :
+                    playerKey = "Player" + str(playerNumber)
+                    addplayertoJson(playerNumber,playerKey,0,0,nextPlay,False,False,0)
+                    print("No player entered, entry recorded as Player", playerNumber)
+
+
 # setup the game
 #setupGame()
 
@@ -136,6 +147,10 @@ def playTurn() :
         playerdata['players'][playingPlayerID]['nextPlay'] = True
 
     print(playerdata)
+    print (p['Name'])
+    return p['Name']
+
+
     
     # did they land on a snake or a ladder
     # did they win
@@ -147,7 +162,7 @@ def playGame() :
 
     while winner == "" :
         # this simulates your button press
-        input('Press enter to roll the dice')
+        #input('Press enter to roll the dice')
         # this calls the generic play turn function
         playTurn()
         # this loops through the player json and tests if there has been a winner, I think you will
@@ -158,13 +173,16 @@ def playGame() :
         for p in playerdata['players'] :   
             if p['hasWon'] == True :
                 winner = p['Name']
-                print(winner)
-    return("The winner is " + winner)    
-    #return winner       
-                
+                score = p['Score']
+                print(winner + score) 
+
+    return("The winner is " + winner + " he got " + p['Score'])    
 
     with open('player.json', 'w') as outfile:  
         json.dump(playerdata, outfile) 
+    #return winner       
+            
+
 
 
 

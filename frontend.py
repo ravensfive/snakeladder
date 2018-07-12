@@ -16,10 +16,10 @@ def GameStart():
     elif request.method == 'POST':#
         if request.form.get('Start Game') == 'Start Game':
             print('Game Started')
+            BackEnd.setupGame()
             return redirect(url_for('GameSetUp'))
         else:
-            BackEnd.setupGame()
-            BackEnd.createPlayerDict(2)
+            
             BackEnd.playTurn()
             return BackEnd.playGame()
             #return 'Complete'
@@ -31,7 +31,7 @@ def GameStart():
 
 @app.route('/GameSetUp', methods = ['POST', 'GET'])
 def GameSetUp():
-    return render_template('Page2GameSetUp.html')
+    #return render_template('Page2GameSetUp.html')
     #str(random.randint(1,10))
     #if requeest.method == 'GET':   
         #return "John" 
@@ -41,8 +41,16 @@ def GameSetUp():
 
     #return str(random.randint(1,10))
 
-
-   #if request.method == 'POST':
+    if request.method == 'POST':
+        print(request.form['noOfPlayers'])
+        NumPlayers = request.form['noOfPlayers']
+        #BackEnd.createPlayerDict(int(NumPlayers))
+        BackEnd.createPlayers('Simon', 1, True)
+        BackEnd.createPlayers('Steve', 2, False)
+        return redirect(url_for('gameProgress'))
+    else:
+        return render_template('Page2GameSetUp.html')
+      #BackEnd.createPlayerDict(2)
       #result = request.form
       #return render_template("Page2GameSetUp.html")
 
@@ -56,10 +64,14 @@ def GameSetUp():
     #return render_template('Game.html', variable=createPlayerDict(int(request.form['numPlayers'])) )
     #return render_template('Game.html', variable='Cock')
     
-@app.route('/GameProgress')
+@app.route('/GameProgress', methods = ['POST', 'GET'])
 def gameProgress():
-    return render_template('Page3GameProgress.html')
-
+    if request.method == 'GET':
+        return render_template('Page3GameProgress.html')
+    elif request.method == 'POST':
+        BackEnd.playTurn()
+        return render_template('Page3GameProgress.html')
+  
 @app.route('/GameOver')
 def gameOver():
     return render_template('Page4GameOver.html')
