@@ -133,6 +133,7 @@ def playTurn() :
             p['numGoes'] = p['numGoes'] + 1
             p['nextPlay'] = False
             p['didPlay'] = True
+            #print (p['name'], 'SimonTest')
 
             # set next player
             playingPlayerID = int(p['ID'])
@@ -148,7 +149,7 @@ def playTurn() :
 
     print(playerdata)
     print (p['Name'])
-    return p['Name']
+    return p['Name'], p['Score']
 
 
     

@@ -67,10 +67,10 @@ def gameProgress():
     if request.method == 'GET':
         return render_template('Page3GameProgress.html')
     elif request.method == 'POST':
-        playerName = BackEnd.playTurn()
+        playerName, playerScore = BackEnd.playTurn()
         print(playerName)
         #return PlayerName
-        return render_template('Page3GameProgress.html', playerName=playerName)
+        return render_template('Page3GameProgress.html', playerName=playerName, playerScore=playerScore)
   
 @app.route('/GameOver')
 def gameOver():
