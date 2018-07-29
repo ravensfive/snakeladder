@@ -6,28 +6,23 @@ import BackEnd
 app = Flask(__name__)
 
 #App.Route takes you to a specific area.  For example ('/') is the initial page
-#GameStart page 
+#GameStart page - Give options to Start Game or End Game.
+#If Start Game is selected then the Set Up Game function is called and URL Redirects to the Game Set up Page
+#If End Game is selected then a new template to be called
 @app.route('/', methods = ['POST', 'GET'])
 def GameStart():
     print(request.method)
     if request.method == 'GET':
         return render_template('Page1GameStart.html')
-    #return "Hello Bert"
-    elif request.method == 'POST':#
+    elif request.method == 'POST':
         if request.form.get('Start Game') == 'Start Game':
             print('Game Started')
             BackEnd.setupGame()
             return redirect(url_for('GameSetUp'))
-        else:
-            
-            BackEnd.playTurn()
-            return BackEnd.playGame()
-            #return 'Complete'
-            
-            # Set up a End Game Template with Options to start again
-        #return render_template('Page2GameSetUp.html')
-        
-        #return str(random.randint(1,10))
+        elif request.form.get('End Game') == 'End Game':
+             #TO-DO - Create a screen if End Game has been selected
+             # Set up a End Game Template with Options to start again
+            return "Finished"
 
 @app.route('/GameSetUp', methods = ['POST', 'GET'])
 def GameSetUp():
@@ -42,9 +37,12 @@ def GameSetUp():
     #return str(random.randint(1,10))
 
     if request.method == 'POST':
-        print(request.form['noOfPlayers'])
-        NumPlayers = request.form['noOfPlayers']
-        #BackEnd.createPlayerDict(int(NumPlayers))
+        #TO-DO Establish what button has been selected and process based on if
+        #TO-DO Validate the responses have been completed correctly
+        numPlayers = request.form['noOfPlayers']
+        print(numPlayers)
+        #TO-DO Create the required number of input boxes based on what numPlayers is
+        #TO-DO Create players dynamically based on what's been input
         BackEnd.createPlayers('Simon', 1, True)
         BackEnd.createPlayers('Steve', 2, False)
         return redirect(url_for('gameProgress'))
@@ -69,8 +67,10 @@ def gameProgress():
     if request.method == 'GET':
         return render_template('Page3GameProgress.html')
     elif request.method == 'POST':
-        BackEnd.playTurn()
-        return render_template('Page3GameProgress.html')
+        playerName = BackEnd.playTurn()
+        print(playerName)
+        #return PlayerName
+        return render_template('Page3GameProgress.html', playerName=playerName)
   
 @app.route('/GameOver')
 def gameOver():
