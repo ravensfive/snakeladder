@@ -36,7 +36,7 @@ def setupGame() :
     while gameReady == False :
         #gameSize = input("What is the maximum score, must be a multiple of 10!")
         #gameSize = int(gameSize)
-        gameSize = 100
+        gameSize = 10
         #if gameSize / 10 == int(gameSize/10) :
         factor = int(gameSize / 10)
         gameReady = True
@@ -123,9 +123,8 @@ def playTurn() :
     #    playerdata = json.load(json_file)
         
     for p in playerdata['players']:    
-
         if p['nextPlay'] == True :
-  
+            
             diceRoll = random.randint(1,6)
             p['lastRoll'] = diceRoll
             p['lastScore'] = p['Score']
@@ -133,26 +132,25 @@ def playTurn() :
             p['numGoes'] = p['numGoes'] + 1
             p['nextPlay'] = False
             p['didPlay'] = True
-            #print (p['name'], 'SimonTest')
-
+            
             # set next player
             playingPlayerID = int(p['ID'])
 
             if int(p['Score']) >= gameSize :
                 p['hasWon'] = True
 
-    # set next player
-    if playingPlayerID == len(playerdata['players']) :
-        playerdata['players'][0]['nextPlay'] = True        
-    else :
-        playerdata['players'][playingPlayerID]['nextPlay'] = True
+            # set next player
+            print(len(playerdata['players']))
+            if playingPlayerID == len(playerdata['players']) :
+                playerdata['players'][0]['nextPlay'] = True        
+            else :
+                playerdata['players'][playingPlayerID]['nextPlay'] = True
 
-    print(playerdata)
-    print (p['Name'])
-    return p['Name'], p['Score']
+            return p['Name'], p['lastRoll'], p['Score'], p['hasWon']
 
-
+    #print(playerdata)
     
+
     # did they land on a snake or a ladder
     # did they win
 

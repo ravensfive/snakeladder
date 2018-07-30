@@ -67,14 +67,18 @@ def gameProgress():
     if request.method == 'GET':
         return render_template('Page3GameProgress.html')
     elif request.method == 'POST':
-        playerName, playerScore = BackEnd.playTurn()
-        print(playerName)
+        playerName, playerPreviousScore, playerScore, hasWon = BackEnd.playTurn()
         #return PlayerName
-        return render_template('Page3GameProgress.html', playerName=playerName, playerScore=playerScore)
+        if hasWon == True:
+            return redirect(url_for('gameOver', winningPlayer=playerName))
+        else:
+            return render_template('Page3GameProgress.html', playerName=playerName, 
+            playerScore=playerScore, playerPreviousScore=playerPreviousScore, hasWon=hasWon)
   
-@app.route('/GameOver')
-def gameOver():
-    return render_template('Page4GameOver.html')
+@app.route('/gameOver/<winningPlayer>')
+def gameOver(winningPlayer):
+    print(winningPlayer)
+    return render_template('Page4GameOver.html', winningPlayer=winningPlayer)
     
 if __name__ == "__main__":
     app.secret_key = os.urandom(12)
