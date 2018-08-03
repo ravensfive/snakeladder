@@ -8,10 +8,9 @@ app = Flask(__name__)
 #App.Route takes you to a specific area.  For example ('/') is the initial page
 #GameStart page - Give options to Start Game or End Game.
 #If Start Game is selected then the Set Up Game function is called and URL Redirects to the Game Set up Page
-#If End Game is selected then a new template to be called
+#If End Game is selected then the user has the option to begin or end the game for certain
 @app.route('/', methods = ['POST', 'GET'])
 def GameStart():
-    print(request.method)
     if request.method == 'GET':
         return render_template('Page1GameStart.html')
     elif request.method == 'POST':
@@ -20,47 +19,39 @@ def GameStart():
             BackEnd.setupGame()
             return redirect(url_for('GameSetUp'))
         elif request.form.get('End Game') == 'End Game':
-             #TO-DO - Create a screen if End Game has been selected
-             # Set up a End Game Template with Options to start again
-            return "Finished"
+            return redirect(url_for('gameExit'))
+
+# Called from the GameStart function when a user selects End Game
+# The user is then presented with a choice to end the game or go back and start again
+@app.route('/gameExit', methods = ['POST', 'GET'])
+def gameExit():
+    if request.method == 'POST':
+        print (request.method)
+        if request.form.get('Begin Game') == 'Begin Game':
+            return redirect(url_for('GameStart'))
+        elif request.form.get('End Game') == 'End Game':
+            return "That's a real shame"
+    else:
+        return render_template('Page5GameOver.html')
+
 
 @app.route('/GameSetUp', methods = ['POST', 'GET'])
 def GameSetUp():
-    #return render_template('Page2GameSetUp.html')
-    #str(random.randint(1,10))
-    #if requeest.method == 'GET':   
-        #return "John" 
-     #   return render_template('Page2GameSetUp.html')
-    #else:
-     #   return str(random.randint(1,10))
-
-    #return str(random.randint(1,10))
-
     if request.method == 'POST':
-        #TO-DO Establish what button has been selected and process based on if
-        #TO-DO Validate the responses have been completed correctly
-        numPlayers = request.form['noOfPlayers']
-        print(numPlayers)
-        #TO-DO Create the required number of input boxes based on what numPlayers is
-        #TO-DO Create players dynamically based on what's been input
-        BackEnd.createPlayers('Simon', 1, True)
-        BackEnd.createPlayers('Steve', 2, False)
-        return redirect(url_for('gameProgress'))
+        if request.form.get('Add Player') == 'Add Player':
+            return 'I need to write some code to set up a template with an input box and then loop through'
+        elif request.form.get('Start Game') == 'Start Game':
+            #TO-DO Validate the responses have been completed correctly
+            numPlayers = request.form['noOfPlayers']
+            player1 = request.form['Player One']
+            player2 = request.form['Player Two']
+            #TO-DO Create the required number of input boxes based on what numPlayers is
+            BackEnd.createPlayers(player1, 1, True)
+            BackEnd.createPlayers(player2, 2, False)
+            return redirect(url_for('gameProgress'))
     else:
         return render_template('Page2GameSetUp.html')
-      #BackEnd.createPlayerDict(2)
-      #result = request.form
-      #return render_template("Page2GameSetUp.html")
 
-
-#Post Method selected which creates PlayGame area
-#@app.route('/GameSetUp')
-#def GameSetUp():
-
-
-    #return render_template('Page2GameSetUp.html')
-    #return render_template('Game.html', variable=createPlayerDict(int(request.form['numPlayers'])) )
-    #return render_template('Game.html', variable='Cock')
     
 @app.route('/GameProgress', methods = ['POST', 'GET'])
 def gameProgress():
@@ -70,13 +61,14 @@ def gameProgress():
         playerName, playerPreviousScore, playerScore, hasWon = BackEnd.playTurn()
         #return PlayerName
         if hasWon == True:
-            return redirect(url_for('gameOver', winningPlayer=playerName))
+            return redirect(url_for('gameOver'))
         else:
             return render_template('Page3GameProgress.html', playerName=playerName, 
             playerScore=playerScore, playerPreviousScore=playerPreviousScore, hasWon=hasWon)
   
-@app.route('/gameOver/<winningPlayer>')
-def gameOver(winningPlayer):
+@app.route('/gameOver')
+def gameOver():
+    winningPlayer = BackEnd.isWinner()
     print(winningPlayer)
     return render_template('Page4GameOver.html', winningPlayer=winningPlayer)
     

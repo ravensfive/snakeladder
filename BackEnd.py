@@ -36,7 +36,7 @@ def setupGame() :
     while gameReady == False :
         #gameSize = input("What is the maximum score, must be a multiple of 10!")
         #gameSize = int(gameSize)
-        gameSize = 10
+        gameSize = 100
         #if gameSize / 10 == int(gameSize/10) :
         factor = int(gameSize / 10)
         gameReady = True
@@ -153,6 +153,13 @@ def playTurn() :
 
     # did they land on a snake or a ladder
     # did they win
+
+def isWinner() :
+
+        for p in playerdata['players']:    
+            if p['hasWon'] == True :
+                print(p['Name'])
+                return p['Name']
 
 def playGame() :
     

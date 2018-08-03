@@ -9,23 +9,23 @@
 
 {% block content %}
 
-<style>
-    p {
-        color: red;
-        text-align: center;
-    } 
-    </style>
-
-<p> Please select Start Game below to begin 
-</p>
-
 <body>
-  <div class="container">
-    <form action="" class="form-inline" method="post">
-      <input type="submit" value="Start Game" name="Start Game"/>
-      <input type="submit" value="End Game" name="End Game"/>
-    </form>
-  </div>
+
+    <h2>
+        Game Over 
+        Do you want to play again?
+
+        <form action="" class="form-inline" method="post">
+                <input type="submit" value="Begin Game" name="Begin Game"/>
+                <input type="submit" value="End Game" name="End Game"/>
+        </form>
+
+    </h2>
+
+    <h3>
+        <img src="/static/images/sadFace.jpg" alt="Sad Face" width="50%" height="auto">
+    </h3>
+
 </body>
 
 {% endblock %}
